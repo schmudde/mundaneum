@@ -12,6 +12,8 @@
 ;; for the properties and entities you must use to phrase your
 ;; question properly. We have functions to help:
 
+(comment
+
 (entity "U2")
 
 ;; Now we know the ID for U2... or do we? Which U2 is it, really?
@@ -64,7 +66,7 @@
 (->> (query
       '[:select ?itemLabel
         :where [:union [[[?item (wdt :place-of-birth) ?pob]
-                         [?pob (wdt :located-in-the-administrative-territorial-entity) * (entity "ancient Rome")]]]]
+                         [?pob (wdt :located-in-the-administrative-territorial-entity) * (entity "Ancient Rome")]]]]
         :limit 10])
      (map :itemLabel)
      (into #{}))
@@ -148,7 +150,7 @@
 ;; airports within 100km of Paris, use "around" service
 (->>
  (query
-  '[:select :distinct ?placeLabel 
+  '[:select :distinct ?placeLabel
     :where [[(entity "Paris") (wdt :coordinate-location) ?parisLoc]
             [?place (wdt :instance-of) (entity "airport")]
             :service wikibase:around [[?place (wdt :coordinate-location) ?location]
@@ -283,3 +285,5 @@
 (binding [mundaneum.query/*default-language* "th"]
   (describe (entity "ระยอง")))
 ;;=> "หน้าแก้ความกำกวมวิกิมีเดีย"
+
+)
